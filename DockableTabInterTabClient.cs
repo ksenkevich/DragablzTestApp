@@ -28,14 +28,15 @@ namespace DragablzTestApp
                 SourceTabablzControl.IsVisibleChanged += SourceTabablzControl_IsVisibleChanged;
             }
 
-            var window = new DragablzWindow();
-            window.Height = source.ActualHeight;
-            window.Width = source.ActualWidth;
-            window.WindowState = WindowState.Normal;
+            var window = new DragablzWindow {WindowState = WindowState.Normal};
             window.SizeChanged += Window_SizeChanged;
             window.StateChanged += Window_StateChanged;
 
-            var tabControl = new TabablzControl();
+            var tabControl = new TabablzControl
+            {
+                InterTabController = new InterTabController {InterTabClient = new DockableTabInterTabClient()}
+            };
+
             window.Content = tabControl;
             var newTabHost = new NewTabHost<Window>(window, tabControl);
             NewTabHosts.Add(newTabHost);
